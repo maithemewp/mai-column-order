@@ -21,11 +21,11 @@ addFilter(
 				...settings,
 				attributes: {
 					...settings.attributes,
-					isReversedDirectionOnMobile: {
+					isReversedDirectionOnTablet: {
 						type: 'boolean',
 						default: false,
 					},
-					isReversedDirectionOnTablet: {
+					isReversedDirectionOnMobile: {
 						type: 'boolean',
 						default: false,
 					},
@@ -196,12 +196,12 @@ addFilter(
 			if ('core/column' === name) {
 				const style = {};
 
-				if (orderMobile) {
-					style['--order-mobile'] = String(orderMobile);
-				}
-
 				if (orderTablet) {
 					style['--order-tablet'] = String(orderTablet);
+				}
+
+				if (orderMobile) {
+					style['--order-mobile'] = String(orderMobile);
 				}
 
 				if (Object.keys(style).length) {

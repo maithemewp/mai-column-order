@@ -133,9 +133,9 @@ module.exports = window["wp"]["i18n"];
 var __webpack_exports__ = {};
 // This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
+/*!******************************************************************!*\
+  !*** ../../../../../../../Plugins/mai-column-order/src/index.js ***!
+  \******************************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/hooks */ "@wordpress/hooks");
 /* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_0__);
@@ -170,11 +170,11 @@ __webpack_require__.r(__webpack_exports__);
       ...settings,
       attributes: {
         ...settings.attributes,
-        isReversedDirectionOnMobile: {
+        isReversedDirectionOnTablet: {
           type: 'boolean',
           default: false
         },
-        isReversedDirectionOnTablet: {
+        isReversedDirectionOnMobile: {
           type: 'boolean',
           default: false
         }
@@ -352,11 +352,11 @@ __webpack_require__.r(__webpack_exports__);
     // Handle column block.
     if ('core/column' === name) {
       const style = {};
-      if (orderMobile) {
-        style['--order-mobile'] = String(orderMobile);
-      }
       if (orderTablet) {
         style['--order-tablet'] = String(orderTablet);
+      }
+      if (orderMobile) {
+        style['--order-mobile'] = String(orderMobile);
       }
       if (Object.keys(style).length) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(BlockListBlock, {
