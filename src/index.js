@@ -1,7 +1,7 @@
 import { addFilter } from '@wordpress/hooks';
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { InspectorControls } from '@wordpress/block-editor';
-import { PanelRow, PanelBody, RangeControl, __experimentalToolsPanelItem as ToolsPanelItem, ToggleControl } from '@wordpress/components';
+import { PanelRow, PanelBody, RangeControl, ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -25,10 +25,6 @@ addFilter(
 						type: 'boolean',
 						default: false,
 					},
-					isReversedDirectionOnTablet: {
-						type: 'boolean',
-						default: false,
-					},
 				},
 			};
 		}
@@ -38,10 +34,6 @@ addFilter(
 				...settings,
 				attributes: {
 					...settings.attributes,
-					orderTablet: {
-						type: 'number',
-						default: 0,
-					},
 					orderMobile: {
 						type: 'number',
 						default: 0,
@@ -66,26 +58,13 @@ addFilter(
 	createHigherOrderComponent((BlockEdit) => {
 		return (props) => {
 			const { name, attributes, setAttributes } = props;
-			const { isReversedDirectionOnTablet, isReversedDirectionOnMobile, orderTablet, orderMobile } = attributes;
+			const { isReversedDirectionOnMobile, orderMobile } = attributes;
 
 			// Handle columns block.
 			if ( 'core/columns' === name ) {
 				return (
 					<>
 						<BlockEdit {...props} />
-						<InspectorControls>
-							<div style={{ padding: '0 16px 4px' }}>
-								<ToggleControl
-									label={__('Reverse direction on tablet', 'mai-column-order')}
-									checked={isReversedDirectionOnTablet}
-									onChange={() => {
-										setAttributes({
-											isReversedDirectionOnTablet: !isReversedDirectionOnTablet,
-										});
-									}}
-								/>
-							</div>
-						</InspectorControls>
 						<InspectorControls>
 							<div style={{ padding: '0 16px 8px' }}>
 								<ToggleControl
@@ -108,23 +87,6 @@ addFilter(
 				return (
 					<>
 						<BlockEdit {...props} />
-						<InspectorControls>
-							<div style={{ padding: '0 16px 4px' }}>
-								<RangeControl
-									label={__('Order on tablet', 'mai-column-order')}
-									value={orderTablet}
-									onChange={(value) => {
-										setAttributes({
-											orderTablet: value
-										});
-									}}
-									min={-4}
-									max={8}
-									allowReset={true}
-									resetFallbackValue={0}
-								/>
-							</div>
-						</InspectorControls>
 						<InspectorControls>
 							<div style={{ padding: '0 16px 8px' }}>
 								<RangeControl
@@ -159,9 +121,7 @@ addFilter(
 		return (props) => {
 			const { name, attributes } = props;
 			const {
-				isReversedDirectionOnTablet,
 				isReversedDirectionOnMobile,
-				orderTablet,
 				orderMobile,
 			} = attributes;
 
@@ -173,10 +133,6 @@ addFilter(
 			// Handle columns block.
 			if ('core/columns' === name) {
 				const classes = [];
-
-				if (isReversedDirectionOnTablet) {
-					classes.push('is-reversed-direction-on-tablet');
-				}
 
 				if (isReversedDirectionOnMobile) {
 					classes.push('is-reversed-direction-on-mobile');
@@ -198,10 +154,6 @@ addFilter(
 
 				if (orderMobile) {
 					style['--order-mobile'] = String(orderMobile);
-				}
-
-				if (orderTablet) {
-					style['--order-tablet'] = String(orderTablet);
 				}
 
 				if (Object.keys(style).length) {
@@ -239,10 +191,6 @@ addFilter(
 		if ( 'core/columns' === blockType.name ) {
 			const classes = [];
 
-			if ( attributes.isReversedDirectionOnTablet ) {
-				classes.push('is-reversed-direction-on-tablet');
-			}
-
 			if ( attributes.isReversedDirectionOnMobile ) {
 				classes.push('is-reversed-direction-on-mobile');
 			}
@@ -258,10 +206,6 @@ addFilter(
 		// Handle column block.
 		if ( 'core/column' === blockType.name ) {
 			const style = { ...extraProps.style };
-
-			if ( attributes.orderTablet ) {
-				style['--order-tablet'] = String(attributes.orderTablet);
-			}
 
 			if ( attributes.orderMobile ) {
 				style['--order-mobile'] = String(attributes.orderMobile);

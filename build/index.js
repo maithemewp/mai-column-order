@@ -173,10 +173,6 @@ __webpack_require__.r(__webpack_exports__);
         isReversedDirectionOnMobile: {
           type: 'boolean',
           default: false
-        },
-        isReversedDirectionOnTablet: {
-          type: 'boolean',
-          default: false
         }
       }
     };
@@ -186,10 +182,6 @@ __webpack_require__.r(__webpack_exports__);
       ...settings,
       attributes: {
         ...settings.attributes,
-        orderTablet: {
-          type: 'number',
-          default: 0
-        },
         orderMobile: {
           type: 'number',
           default: 0
@@ -214,9 +206,7 @@ __webpack_require__.r(__webpack_exports__);
       setAttributes
     } = props;
     const {
-      isReversedDirectionOnTablet,
       isReversedDirectionOnMobile,
-      orderTablet,
       orderMobile
     } = attributes;
 
@@ -225,21 +215,6 @@ __webpack_require__.r(__webpack_exports__);
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(BlockEdit, {
           ...props
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, {
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-            style: {
-              padding: '0 16px 4px'
-            },
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
-              label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Reverse direction on tablet', 'mai-column-order'),
-              checked: isReversedDirectionOnTablet,
-              onChange: () => {
-                setAttributes({
-                  isReversedDirectionOnTablet: !isReversedDirectionOnTablet
-                });
-              }
-            })
-          })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, {
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
             style: {
@@ -264,25 +239,6 @@ __webpack_require__.r(__webpack_exports__);
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(BlockEdit, {
           ...props
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, {
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-            style: {
-              padding: '0 16px 4px'
-            },
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
-              label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Order on tablet', 'mai-column-order'),
-              value: orderTablet,
-              onChange: value => {
-                setAttributes({
-                  orderTablet: value
-                });
-              },
-              min: -4,
-              max: 8,
-              allowReset: true,
-              resetFallbackValue: 0
-            })
-          })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, {
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
             style: {
@@ -319,9 +275,7 @@ __webpack_require__.r(__webpack_exports__);
       attributes
     } = props;
     const {
-      isReversedDirectionOnTablet,
       isReversedDirectionOnMobile,
-      orderTablet,
       orderMobile
     } = attributes;
 
@@ -335,9 +289,6 @@ __webpack_require__.r(__webpack_exports__);
     // Handle columns block.
     if ('core/columns' === name) {
       const classes = [];
-      if (isReversedDirectionOnTablet) {
-        classes.push('is-reversed-direction-on-tablet');
-      }
       if (isReversedDirectionOnMobile) {
         classes.push('is-reversed-direction-on-mobile');
       }
@@ -354,9 +305,6 @@ __webpack_require__.r(__webpack_exports__);
       const style = {};
       if (orderMobile) {
         style['--order-mobile'] = String(orderMobile);
-      }
-      if (orderTablet) {
-        style['--order-tablet'] = String(orderTablet);
       }
       if (Object.keys(style).length) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(BlockListBlock, {
@@ -387,9 +335,6 @@ __webpack_require__.r(__webpack_exports__);
   // Handle columns block.
   if ('core/columns' === blockType.name) {
     const classes = [];
-    if (attributes.isReversedDirectionOnTablet) {
-      classes.push('is-reversed-direction-on-tablet');
-    }
     if (attributes.isReversedDirectionOnMobile) {
       classes.push('is-reversed-direction-on-mobile');
     }
@@ -406,9 +351,6 @@ __webpack_require__.r(__webpack_exports__);
     const style = {
       ...extraProps.style
     };
-    if (attributes.orderTablet) {
-      style['--order-tablet'] = String(attributes.orderTablet);
-    }
     if (attributes.orderMobile) {
       style['--order-mobile'] = String(attributes.orderMobile);
     }
