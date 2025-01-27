@@ -133,9 +133,9 @@ module.exports = window["wp"]["i18n"];
 var __webpack_exports__ = {};
 // This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 (() => {
-/*!******************************************************************!*\
-  !*** ../../../../../../../Plugins/mai-column-order/src/index.js ***!
-  \******************************************************************/
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/hooks */ "@wordpress/hooks");
 /* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_0__);
@@ -156,12 +156,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /**
- * Adds attributes to the blocks.
+ * Adds custom attributes to the core/columns and core/column blocks.
  *
  * @since 0.1.0
- * @param {Object} settings The block settings.
- * @param {string} name    The block name.
- * @return {Object} The filtered block settings.
+ * @param {Object} settings The block settings object.
+ * @param {string} name    The block name/type (e.g., 'core/columns' or 'core/column').
+ * @return {Object} Modified block settings with additional attributes.
  */
 
 (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_0__.addFilter)('blocks.registerBlockType', 'mai-column-order/add-attributes', (settings, name) => {
@@ -173,10 +173,6 @@ __webpack_require__.r(__webpack_exports__);
         isReversedDirectionOnMobile: {
           type: 'boolean',
           default: false
-        },
-        isReversedDirectionOnTablet: {
-          type: 'boolean',
-          default: false
         }
       }
     };
@@ -186,10 +182,6 @@ __webpack_require__.r(__webpack_exports__);
       ...settings,
       attributes: {
         ...settings.attributes,
-        orderTablet: {
-          type: 'number',
-          default: 0
-        },
         orderMobile: {
           type: 'number',
           default: 0
@@ -201,10 +193,12 @@ __webpack_require__.r(__webpack_exports__);
 });
 
 /**
- * Filter the BlockEdit object and add inspector controls to blocks.
+ * Adds inspector controls to the core/columns and core/column blocks.
+ * Allows configuring mobile direction and order settings.
  *
  * @since 0.1.0
- * @param {Object} BlockEdit
+ * @param {Function} BlockEdit Original block edit component.
+ * @return {Function} Enhanced block edit component with additional controls.
  */
 (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_0__.addFilter)('editor.BlockEdit', 'mai-column-order/add-inspector-controls', (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_1__.createHigherOrderComponent)(BlockEdit => {
   return props => {
@@ -214,9 +208,7 @@ __webpack_require__.r(__webpack_exports__);
       setAttributes
     } = props;
     const {
-      isReversedDirectionOnTablet,
       isReversedDirectionOnMobile,
-      orderTablet,
       orderMobile
     } = attributes;
 
@@ -225,21 +217,6 @@ __webpack_require__.r(__webpack_exports__);
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(BlockEdit, {
           ...props
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, {
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-            style: {
-              padding: '0 16px 4px'
-            },
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
-              label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Reverse direction on tablet', 'mai-column-order'),
-              checked: isReversedDirectionOnTablet,
-              onChange: () => {
-                setAttributes({
-                  isReversedDirectionOnTablet: !isReversedDirectionOnTablet
-                });
-              }
-            })
-          })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, {
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
             style: {
@@ -264,25 +241,6 @@ __webpack_require__.r(__webpack_exports__);
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(BlockEdit, {
           ...props
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, {
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-            style: {
-              padding: '0 16px 4px'
-            },
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.RangeControl, {
-              label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Order on tablet', 'mai-column-order'),
-              value: orderTablet,
-              onChange: value => {
-                setAttributes({
-                  orderTablet: value
-                });
-              },
-              min: -4,
-              max: 8,
-              allowReset: true,
-              resetFallbackValue: 0
-            })
-          })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, {
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
             style: {
@@ -311,7 +269,14 @@ __webpack_require__.r(__webpack_exports__);
   };
 }));
 
-// Update the editor styles filter
+/**
+ * Applies custom styles and classes to blocks in the editor.
+ * Handles mobile direction for columns and order for individual columns.
+ *
+ * @since 0.1.0
+ * @param {Function} BlockListBlock Original block list block component.
+ * @return {Function} Enhanced block list block component with additional styles.
+ */
 (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_0__.addFilter)('editor.BlockListBlock', 'mai-column-order/with-styles', (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_1__.createHigherOrderComponent)(BlockListBlock => {
   return props => {
     const {
@@ -319,9 +284,7 @@ __webpack_require__.r(__webpack_exports__);
       attributes
     } = props;
     const {
-      isReversedDirectionOnTablet,
       isReversedDirectionOnMobile,
-      orderTablet,
       orderMobile
     } = attributes;
 
@@ -335,9 +298,6 @@ __webpack_require__.r(__webpack_exports__);
     // Handle columns block.
     if ('core/columns' === name) {
       const classes = [];
-      if (isReversedDirectionOnTablet) {
-        classes.push('is-reversed-direction-on-tablet');
-      }
       if (isReversedDirectionOnMobile) {
         classes.push('is-reversed-direction-on-mobile');
       }
@@ -354,9 +314,6 @@ __webpack_require__.r(__webpack_exports__);
       const style = {};
       if (orderMobile) {
         style['--order-mobile'] = String(orderMobile);
-      }
-      if (orderTablet) {
-        style['--order-tablet'] = String(orderTablet);
       }
       if (Object.keys(style).length) {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(BlockListBlock, {
@@ -377,7 +334,16 @@ __webpack_require__.r(__webpack_exports__);
   };
 }));
 
-// Update the save props filter.
+/**
+ * Modifies the saved content props for columns and column blocks.
+ * Adds custom classes and styles for mobile responsiveness.
+ *
+ * @since 0.1.0
+ * @param {Object} extraProps     Additional props to be applied to the block's save element.
+ * @param {Object} blockType      The block type configuration object.
+ * @param {Object} attributes     The block's attributes.
+ * @return {Object} Modified extra props to be applied to the block's save element.
+ */
 (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_0__.addFilter)('blocks.getSaveContent.extraProps', 'mai-column-order/save-props', (extraProps, blockType, attributes) => {
   // Return early if not our blocks.
   if (!['core/columns', 'core/column'].includes(blockType.name)) {
@@ -387,9 +353,6 @@ __webpack_require__.r(__webpack_exports__);
   // Handle columns block.
   if ('core/columns' === blockType.name) {
     const classes = [];
-    if (attributes.isReversedDirectionOnTablet) {
-      classes.push('is-reversed-direction-on-tablet');
-    }
     if (attributes.isReversedDirectionOnMobile) {
       classes.push('is-reversed-direction-on-mobile');
     }
@@ -406,9 +369,6 @@ __webpack_require__.r(__webpack_exports__);
     const style = {
       ...extraProps.style
     };
-    if (attributes.orderTablet) {
-      style['--order-tablet'] = String(attributes.orderTablet);
-    }
     if (attributes.orderMobile) {
       style['--order-mobile'] = String(attributes.orderMobile);
     }

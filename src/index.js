@@ -1,16 +1,16 @@
 import { addFilter } from '@wordpress/hooks';
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { InspectorControls } from '@wordpress/block-editor';
-import { PanelRow, PanelBody, RangeControl, __experimentalToolsPanelItem as ToolsPanelItem, ToggleControl } from '@wordpress/components';
+import { PanelRow, PanelBody, RangeControl, ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 /**
- * Adds attributes to the blocks.
+ * Adds custom attributes to the core/columns and core/column blocks.
  *
  * @since 0.1.0
- * @param {Object} settings The block settings.
- * @param {string} name    The block name.
- * @return {Object} The filtered block settings.
+ * @param {Object} settings The block settings object.
+ * @param {string} name    The block name/type (e.g., 'core/columns' or 'core/column').
+ * @return {Object} Modified block settings with additional attributes.
  */
 addFilter(
 	'blocks.registerBlockType',
@@ -25,10 +25,6 @@ addFilter(
 						type: 'boolean',
 						default: false,
 					},
-					isReversedDirectionOnTablet: {
-						type: 'boolean',
-						default: false,
-					},
 				},
 			};
 		}
@@ -38,10 +34,6 @@ addFilter(
 				...settings,
 				attributes: {
 					...settings.attributes,
-					orderTablet: {
-						type: 'number',
-						default: 0,
-					},
 					orderMobile: {
 						type: 'number',
 						default: 0,
@@ -55,10 +47,12 @@ addFilter(
 );
 
 /**
- * Filter the BlockEdit object and add inspector controls to blocks.
+ * Adds inspector controls to the core/columns and core/column blocks.
+ * Allows configuring mobile direction and order settings.
  *
  * @since 0.1.0
- * @param {Object} BlockEdit
+ * @param {Function} BlockEdit Original block edit component.
+ * @return {Function} Enhanced block edit component with additional controls.
  */
 addFilter(
 	'editor.BlockEdit',
@@ -66,26 +60,13 @@ addFilter(
 	createHigherOrderComponent((BlockEdit) => {
 		return (props) => {
 			const { name, attributes, setAttributes } = props;
-			const { isReversedDirectionOnTablet, isReversedDirectionOnMobile, orderTablet, orderMobile } = attributes;
+			const { isReversedDirectionOnMobile, orderMobile } = attributes;
 
 			// Handle columns block.
 			if ( 'core/columns' === name ) {
 				return (
 					<>
 						<BlockEdit {...props} />
-						<InspectorControls>
-							<div style={{ padding: '0 16px 4px' }}>
-								<ToggleControl
-									label={__('Reverse direction on tablet', 'mai-column-order')}
-									checked={isReversedDirectionOnTablet}
-									onChange={() => {
-										setAttributes({
-											isReversedDirectionOnTablet: !isReversedDirectionOnTablet,
-										});
-									}}
-								/>
-							</div>
-						</InspectorControls>
 						<InspectorControls>
 							<div style={{ padding: '0 16px 8px' }}>
 								<ToggleControl
@@ -108,23 +89,6 @@ addFilter(
 				return (
 					<>
 						<BlockEdit {...props} />
-						<InspectorControls>
-							<div style={{ padding: '0 16px 4px' }}>
-								<RangeControl
-									label={__('Order on tablet', 'mai-column-order')}
-									value={orderTablet}
-									onChange={(value) => {
-										setAttributes({
-											orderTablet: value
-										});
-									}}
-									min={-4}
-									max={8}
-									allowReset={true}
-									resetFallbackValue={0}
-								/>
-							</div>
-						</InspectorControls>
 						<InspectorControls>
 							<div style={{ padding: '0 16px 8px' }}>
 								<RangeControl
@@ -151,7 +115,14 @@ addFilter(
 	})
 );
 
-// Update the editor styles filter
+/**
+ * Applies custom styles and classes to blocks in the editor.
+ * Handles mobile direction for columns and order for individual columns.
+ *
+ * @since 0.1.0
+ * @param {Function} BlockListBlock Original block list block component.
+ * @return {Function} Enhanced block list block component with additional styles.
+ */
 addFilter(
 	'editor.BlockListBlock',
 	'mai-column-order/with-styles',
@@ -159,9 +130,7 @@ addFilter(
 		return (props) => {
 			const { name, attributes } = props;
 			const {
-				isReversedDirectionOnTablet,
 				isReversedDirectionOnMobile,
-				orderTablet,
 				orderMobile,
 			} = attributes;
 
@@ -173,10 +142,6 @@ addFilter(
 			// Handle columns block.
 			if ('core/columns' === name) {
 				const classes = [];
-
-				if (isReversedDirectionOnTablet) {
-					classes.push('is-reversed-direction-on-tablet');
-				}
 
 				if (isReversedDirectionOnMobile) {
 					classes.push('is-reversed-direction-on-mobile');
@@ -200,10 +165,6 @@ addFilter(
 					style['--order-mobile'] = String(orderMobile);
 				}
 
-				if (orderTablet) {
-					style['--order-tablet'] = String(orderTablet);
-				}
-
 				if (Object.keys(style).length) {
 					return (
 						<BlockListBlock
@@ -225,7 +186,16 @@ addFilter(
 	})
 );
 
-// Update the save props filter.
+/**
+ * Modifies the saved content props for columns and column blocks.
+ * Adds custom classes and styles for mobile responsiveness.
+ *
+ * @since 0.1.0
+ * @param {Object} extraProps     Additional props to be applied to the block's save element.
+ * @param {Object} blockType      The block type configuration object.
+ * @param {Object} attributes     The block's attributes.
+ * @return {Object} Modified extra props to be applied to the block's save element.
+ */
 addFilter(
 	'blocks.getSaveContent.extraProps',
 	'mai-column-order/save-props',
@@ -238,10 +208,6 @@ addFilter(
 		// Handle columns block.
 		if ( 'core/columns' === blockType.name ) {
 			const classes = [];
-
-			if ( attributes.isReversedDirectionOnTablet ) {
-				classes.push('is-reversed-direction-on-tablet');
-			}
 
 			if ( attributes.isReversedDirectionOnMobile ) {
 				classes.push('is-reversed-direction-on-mobile');
@@ -258,10 +224,6 @@ addFilter(
 		// Handle column block.
 		if ( 'core/column' === blockType.name ) {
 			const style = { ...extraProps.style };
-
-			if ( attributes.orderTablet ) {
-				style['--order-tablet'] = String(attributes.orderTablet);
-			}
 
 			if ( attributes.orderMobile ) {
 				style['--order-mobile'] = String(attributes.orderMobile);
