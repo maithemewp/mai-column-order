@@ -1,0 +1,27 @@
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/index.scss ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+@media (min-width: 782px) and (max-width: 1023px) {
+  .wp-block-column[style*="--order-tablet"] {
+    order: var(--order-tablet, 0);
+  }
+  .wp-block-columns:where(.is-reversed-direction-on-tablet:not(.is-not-stacked-on-mobile)) {
+    flex-direction: column-reverse;
+  }
+  .wp-block-columns:where(.is-reversed-direction-on-tablet) {
+    flex-direction: row-reverse;
+  }
+}
+@media (max-width: 781px) {
+  .wp-block-column[style*="--order-mobile"] {
+    order: var(--order-mobile, 0);
+  }
+  .wp-block-columns:where(.is-reversed-direction-on-mobile:not(.is-not-stacked-on-mobile)) {
+    flex-direction: column-reverse;
+  }
+  .wp-block-columns:where(.is-reversed-direction-on-mobile.is-not-stacked-on-mobile) {
+    flex-direction: row-reverse;
+  }
+}
+
+/*# sourceMappingURL=style.css.map*/
