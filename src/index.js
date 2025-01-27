@@ -5,12 +5,12 @@ import { PanelRow, PanelBody, RangeControl, ToggleControl } from '@wordpress/com
 import { __ } from '@wordpress/i18n';
 
 /**
- * Adds attributes to the blocks.
+ * Adds custom attributes to the core/columns and core/column blocks.
  *
  * @since 0.1.0
- * @param {Object} settings The block settings.
- * @param {string} name    The block name.
- * @return {Object} The filtered block settings.
+ * @param {Object} settings The block settings object.
+ * @param {string} name    The block name/type (e.g., 'core/columns' or 'core/column').
+ * @return {Object} Modified block settings with additional attributes.
  */
 addFilter(
 	'blocks.registerBlockType',
@@ -47,10 +47,12 @@ addFilter(
 );
 
 /**
- * Filter the BlockEdit object and add inspector controls to blocks.
+ * Adds inspector controls to the core/columns and core/column blocks.
+ * Allows configuring mobile direction and order settings.
  *
  * @since 0.1.0
- * @param {Object} BlockEdit
+ * @param {Function} BlockEdit Original block edit component.
+ * @return {Function} Enhanced block edit component with additional controls.
  */
 addFilter(
 	'editor.BlockEdit',
@@ -113,7 +115,14 @@ addFilter(
 	})
 );
 
-// Update the editor styles filter
+/**
+ * Applies custom styles and classes to blocks in the editor.
+ * Handles mobile direction for columns and order for individual columns.
+ *
+ * @since 0.1.0
+ * @param {Function} BlockListBlock Original block list block component.
+ * @return {Function} Enhanced block list block component with additional styles.
+ */
 addFilter(
 	'editor.BlockListBlock',
 	'mai-column-order/with-styles',
@@ -177,7 +186,16 @@ addFilter(
 	})
 );
 
-// Update the save props filter.
+/**
+ * Modifies the saved content props for columns and column blocks.
+ * Adds custom classes and styles for mobile responsiveness.
+ *
+ * @since 0.1.0
+ * @param {Object} extraProps     Additional props to be applied to the block's save element.
+ * @param {Object} blockType      The block type configuration object.
+ * @param {Object} attributes     The block's attributes.
+ * @return {Object} Modified extra props to be applied to the block's save element.
+ */
 addFilter(
 	'blocks.getSaveContent.extraProps',
 	'mai-column-order/save-props',
