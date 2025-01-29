@@ -2,9 +2,9 @@
 /**
  * Plugin Name:       Mai Column Order
  * Description:       Adds column order control for mobile and tablet to the block editor.
- * Version:           0.1.0
+ * Version:           0.1.1
  * Requires at least: 6.7
- * Requires PHP:      7.4
+ * Requires PHP:      8.0
  * Author:            JiveDig
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
