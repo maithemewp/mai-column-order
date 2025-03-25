@@ -54,6 +54,6 @@
             "install-path": "../yahnis-elsts/plugin-update-checker"
         }
     ],
-    "dev": true,
+    "dev": false,
     "dev-package-names": []
 }
