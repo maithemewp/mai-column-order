@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b09582b2bd564b1cc46c92898aef2737",
+    "content-hash": "5a7fa5c7ef6edd0fedbf51914d0047cf",
     "packages": [
         {
             "name": "yahnis-elsts/plugin-update-checker",
@@ -57,7 +57,52 @@
             "time": "2026-05-26T12:48:45+00:00"
         }
     ],
-    "packages-dev": [],
+    "packages-dev": [
+        {
+            "name": "maithemewp/deployable-guard",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maithemewp/deployable-guard.git",
+                "reference": "84e1bed24a783ec9347d4fc2ce8fbcdf5977ad09"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maithemewp/deployable-guard/zipball/84e1bed24a783ec9347d4fc2ce8fbcdf5977ad09",
+                "reference": "84e1bed24a783ec9347d4fc2ce8fbcdf5977ad09",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^10 || ^11 || ^12"
+            },
+            "bin": [
+                "bin/deployable-guard"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Mai\\DeployableGuard\\": "src/"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "phpunit"
+                ]
+            },
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "Verify a committed composer autoloader is deployable as a raw git tree; self-installs a pre-commit hook + CI check.",
+            "support": {
+                "source": "https://github.com/maithemewp/deployable-guard/tree/v1.0.2",
+                "issues": "https://github.com/maithemewp/deployable-guard/issues"
+            },
+            "time": "2026-07-07T19:35:00+00:00"
+        }
+    ],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {},

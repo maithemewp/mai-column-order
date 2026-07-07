@@ -1,0 +1,26 @@
+name: Deployable check
+
+# These plugins deploy as a raw git tree (no composer build on the server), so the
+# committed autoloader must reference only committed files. actions/checkout does
+# NOT run composer install, so the job sees exactly the committed tree -- the same
+# thing a raw-branch deploy would. Fails if a dev-polluted (or otherwise
+# uncommitted-referencing) autoloader is ever committed.
+
+on: [push, pull_request]
+
+jobs:
+  deployable:
+    name: Committed autoloader is deployable as-is
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: maithemewp/deployable-guard
+          ref: v1
+          path: .deployable-guard
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+      - name: Verify committed autoloader has no uncommitted deps
+        run: php .deployable-guard/bin/deployable-guard check --root="$GITHUB_WORKSPACE"

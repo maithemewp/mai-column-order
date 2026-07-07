@@ -28,3 +28,14 @@ node_modules/
 
 # dotenv environment variables file
 .env
+
+# vendor/ is committed (prod-only, --no-dev) so plugin updates apply without a
+# composer build on the server. Allowlist: ignore everything under vendor/ except
+# the autoloader, composer's own files, and each committed production package.
+/vendor/*
+!/vendor/autoload.php
+!/vendor/composer/
+!/vendor/yahnis-elsts/
+
+# deployable-guard's generated pre-commit hook (dev-only; regenerated on install).
+.githooks/
