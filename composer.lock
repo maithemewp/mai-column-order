@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5a7fa5c7ef6edd0fedbf51914d0047cf",
+    "content-hash": "7fe4af8c7ca69c1f2e71c8f3ebd5bbf5",
     "packages": [
         {
             "name": "yahnis-elsts/plugin-update-checker",
@@ -59,17 +59,17 @@
     ],
     "packages-dev": [
         {
-            "name": "maithemewp/deployable-guard",
-            "version": "v1.0.2",
+            "name": "bizbudding/deployable-guard",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/maithemewp/deployable-guard.git",
-                "reference": "84e1bed24a783ec9347d4fc2ce8fbcdf5977ad09"
+                "url": "https://github.com/bizbudding/deployable-guard.git",
+                "reference": "e6612c5b0146ea42e775d8423527776c17a02d31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maithemewp/deployable-guard/zipball/84e1bed24a783ec9347d4fc2ce8fbcdf5977ad09",
-                "reference": "84e1bed24a783ec9347d4fc2ce8fbcdf5977ad09",
+                "url": "https://api.github.com/repos/bizbudding/deployable-guard/zipball/e6612c5b0146ea42e775d8423527776c17a02d31",
+                "reference": "e6612c5b0146ea42e775d8423527776c17a02d31",
                 "shasum": ""
             },
             "require": {
@@ -84,7 +84,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Mai\\DeployableGuard\\": "src/"
+                    "Bizbudding\\DeployableGuard\\": "src/"
                 }
             },
             "scripts": {
@@ -97,10 +97,10 @@
             ],
             "description": "Verify a committed composer autoloader is deployable as a raw git tree; self-installs a pre-commit hook + CI check.",
             "support": {
-                "source": "https://github.com/maithemewp/deployable-guard/tree/v1.0.2",
-                "issues": "https://github.com/maithemewp/deployable-guard/issues"
+                "source": "https://github.com/bizbudding/deployable-guard/tree/v1.0.0",
+                "issues": "https://github.com/bizbudding/deployable-guard/issues"
             },
-            "time": "2026-07-07T19:35:00+00:00"
+            "time": "2026-07-08T17:24:15+00:00"
         }
     ],
     "aliases": [],

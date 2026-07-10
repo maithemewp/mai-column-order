@@ -35,6 +35,10 @@ node_modules/
 /vendor/*
 !/vendor/autoload.php
 !/vendor/composer/
+# vendor/composer/installed.php regenerates with the current git ref (churns after
+# every commit) and is never read at runtime, so do not track it. installed.json is
+# the stable committed record.
+/vendor/composer/installed.php
 !/vendor/yahnis-elsts/
 
 # deployable-guard's generated pre-commit hook (dev-only; regenerated on install).
