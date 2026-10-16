@@ -30,16 +30,23 @@ final class Assets {
 	/**
 	 * Enqueues the editor script that adds the order controls.
 	 *
+	 * Dependencies and version come from build/index.asset.php, which
+	 * wp-scripts writes from the script's real imports. The old hand-written
+	 * list leaned on wp-edit-post, which dragged the post editor's scripts
+	 * into the Site Editor and the widgets editor too.
+	 *
 	 * @since 0.1.0
 	 *
 	 * @return void
 	 */
 	public function enqueue_editor_script(): void {
+		$asset = require MAI_COLUMN_ORDER_DIR . 'build/index.asset.php';
+
 		wp_enqueue_script(
 			'mai-column-order',
 			plugins_url( 'build/index.js', MAI_COLUMN_ORDER_FILE ),
-			[ 'wp-blocks', 'wp-hooks', 'wp-dom-ready', 'wp-edit-post' ],
-			(string) filemtime( MAI_COLUMN_ORDER_DIR . 'build/index.js' ),
+			$asset['dependencies'],
+			$asset['version'],
 			true
 		);
 	}
@@ -47,9 +54,13 @@ final class Assets {
 	/**
 	 * Attaches the ordering CSS to core/columns.
 	 *
-	 * wp_enqueue_block_style() only prints the CSS on pages that contain a
-	 * Columns block, and the 'path' lets core inline it instead of adding a
-	 * separate request.
+	 * By default (WP 6.9+, block and classic themes) core only prints this CSS
+	 * on pages that render a Columns block. The 'path' lets core inline it
+	 * instead of adding a separate request.
+	 *
+	 * The version is the file's modified time, so browsers fetch new CSS when
+	 * the plugin updates. It used to be the theme's version, which only
+	 * changed when the theme did.
 	 *
 	 * @since 0.1.0
 	 *
@@ -61,7 +72,7 @@ final class Assets {
 			[
 				'handle' => 'mai-column-order',
 				'src'    => plugins_url( 'build/style.css', MAI_COLUMN_ORDER_FILE ),
-				'ver'    => wp_get_theme()->get( 'Version' ),
+				'ver'    => (string) filemtime( MAI_COLUMN_ORDER_DIR . 'build/style.css' ),
 				'path'   => MAI_COLUMN_ORDER_DIR . 'build/style.css',
 			]
 		);
