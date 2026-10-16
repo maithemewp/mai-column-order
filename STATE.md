@@ -2,7 +2,7 @@
 Updated: 2026-10-16 by Claude Opus 5.5
 
 ## Now
-0.1.3 is committed locally. It updates @wordpress/scripts to 36.1 and adds npm overrides for patched dev tooling. Not pushed or tagged.
+The unreleased work updates @wordpress/scripts to 36.1 and adds npm overrides for patched dev tooling. Not pushed or tagged.
 
 ## Next
 - Push and tag 0.1.3 once Mike says yes.
