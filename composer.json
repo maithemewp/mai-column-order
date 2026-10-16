@@ -1,6 +1,12 @@
 {
     "require": {
+        "php": ">=8.2",
         "yahnis-elsts/plugin-update-checker": "^5.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mai\\ColumnOrder\\": "inc/classes/"
+        }
     },
     "repositories": [
         {
