@@ -1,18 +1,18 @@
 # State
-Updated: 2026-10-16 by Claude Opus 5.5
+Updated: 2026-10-17 by Claude Opus 5.5
 
 ## Now
-Unreleased on top of 0.1.2, committed locally, not pushed or tagged:
+0.2.0 is committed on develop locally, not pushed or tagged:
 - @wordpress/scripts 36.1 plus npm overrides. Audit 118 to 29, none critical, 0 in shipped code.
 - PHP rebuilt as `Mai\ColumnOrder\` classes in inc/classes/, strict types. Floors are WP 7.0 and PHP 8.2.
 - Editor script deps come from build/index.asset.php. Stylesheet version is the CSS file's mtime.
 
 ## Next
-- Pick a version (0.2.0 fits the floor raise), then push and tag once Mike says yes. The new classes say `@since 0.2.0`; change them if the version differs.
+- Push develop, merge to main, and tag 0.2.0 once Mike says yes.
 - Dismiss the leftover Dependabot alerts (braces, postcss-selector-parser) on GitHub as dev only.
 
 ## Blocked / waiting on
-Mike's go on the version, push, and tag.
+Mike's yes to push and tag 0.2.0.
 
 ## Verify
 - `npm audit --omit=dev` shows 0 vulnerabilities.
