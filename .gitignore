@@ -28,3 +28,21 @@ node_modules/
 
 # dotenv environment variables file
 .env
+
+# vendor/ is committed (prod-only, --no-dev) so plugin updates apply without a
+# composer build on the server. Allowlist: ignore everything under vendor/ except
+# the autoloader, composer's own files, and each committed production package.
+/vendor/*
+!/vendor/autoload.php
+!/vendor/composer/
+# vendor/composer/installed.php regenerates with the current git ref (churns after
+# every commit) and is never read at runtime, so do not track it. installed.json is
+# the stable committed record.
+/vendor/composer/installed.php
+!/vendor/yahnis-elsts/
+
+# deployable-guard's generated pre-commit hook (dev-only; regenerated on install).
+.githooks/
+
+# Per-machine deploy config for mai-sites (holds server details; never commit).
+mai-sites.json

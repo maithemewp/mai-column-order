@@ -10,6 +10,20 @@ class ComposerStaticInit498cd9734dd600df8e6d83e79142eacb
         'bc0af1337b39f0d750e835f5263eb646' => __DIR__ . '/..' . '/yahnis-elsts/plugin-update-checker/load-v5p7.php',
     );
 
+    public static $prefixLengthsPsr4 = array (
+        'M' =>
+        array (
+            'Mai\\ColumnOrder\\' => 16,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'Mai\\ColumnOrder\\' =>
+        array (
+            0 => __DIR__ . '/../..' . '/inc/classes',
+        ),
+    );
+
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
@@ -17,6 +31,8 @@ class ComposerStaticInit498cd9734dd600df8e6d83e79142eacb
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInit498cd9734dd600df8e6d83e79142eacb::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit498cd9734dd600df8e6d83e79142eacb::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInit498cd9734dd600df8e6d83e79142eacb::$classMap;
 
         }, null, ClassLoader::class);

@@ -1,5 +1,31 @@
 {
     "require": {
+        "php": ">=8.2",
         "yahnis-elsts/plugin-update-checker": "^5.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mai\\ColumnOrder\\": "inc/classes/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/bizbudding/deployable-guard"
+        }
+    ],
+    "require-dev": {
+        "bizbudding/deployable-guard": "^1"
+    },
+    "scripts": {
+        "install-git-hooks": [
+            "sh -c 'test -f vendor/bin/deployable-guard && php vendor/bin/deployable-guard install-hook || true'"
+        ],
+        "post-install-cmd": [
+            "@install-git-hooks"
+        ],
+        "post-update-cmd": [
+            "@install-git-hooks"
+        ]
     }
 }
